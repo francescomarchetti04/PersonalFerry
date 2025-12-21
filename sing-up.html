@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/css/intlTelInput.css">
     <title>Document</title>
 </head>
 <body>
@@ -16,6 +17,67 @@
     </header>
 
     <main>  
+      <p> QUI FARE LOG IN CON GOOGLE APPLE O FACEBOOK</p>
+      <form action="dashboard.html" method="post" class="registration-form">
+    
+    <div class="form-group">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required placeholder="Es. Mario">
+    </div>
+
+    <div class="form-group">
+        <label for="Surname">Cognome:</label>
+        <input type="text" id="Surname" name="Surname" required placeholder="Es. Rossi">
+    </div>
+
+    <div class="form-group">
+        <label for="birthdate">Data di nascita:</label>
+        <input type="date" id="birthdate" name="birthdate" required>
+    </div>
+
+    <br><div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="nome@esempio.it">
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Telefono:</label>
+        <input type="tel" id="phone" name="phone" required placeholder="3331234567" pattern="[0-9]{8,11}" title="Inserisci da 8 a 11 cifre">
+    </div>
+
+    <br>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required 
+               minlength="8" maxlength="20" 
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+               autocomplete="new-password">
+                <span class="tooltip">Minimo 8 caratteri, una maiuscola e un numero</span>
+    </div>
+
+    <div class="form-group">
+        <label for="password-confirm">Conferma Password:</label>
+        <input type="password" id="password-confirm" name="password-confirm" required 
+               minlength="8" maxlength="20" 
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+    </div>
+
+    <div style="margin-top: 20px;">
+        <input type="submit" value="Registrati e Accedi">
+    </div>
+
+</form>
+
+      <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/js/intlTelInput.min.js"></script>
+
+<script>
+  const input = document.querySelector("#phone");
+  window.intlTelInput(input, {
+    initialCountry: "it", // Imposta l'Italia come predefinita
+    separateDialCode: true, // Mostra il prefisso fuori dal campo di testo
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/js/utils.js", // Per la validazione
+  });
+</script>
 
     </main>
 

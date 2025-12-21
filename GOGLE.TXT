@@ -1,0 +1,73 @@
+Inserire il pulsante "Accedi con Google"
+
+Inserire il pulsante **"Accedi con Google"** è un'ottima idea: semplifica la vita agli utenti e aumenta la sicurezza. Tuttavia, siccome Google deve verificare l'identità dell'utente, non basta solo il codice HTML; serve una piccola configurazione nella console per sviluppatori di Google.
+
+Ecco i passaggi per farlo in modo moderno e semplice.
+
+---
+
+## 1. Ottieni il tuo "Client ID" (La parte burocratica)
+
+Prima di scrivere il codice, devi dire a Google che il tuo sito esiste:
+
+1. Vai sulla [Google Cloud Console](https://console.cloud.google.com/).
+2. Crea un nuovo progetto.
+3. Vai in **"API e servizi"** > **"Schermata consenso OAuth"** e configurala (basta il nome del sito).
+4. Vai in **"Credenziali"** > **"Crea credenziali"** > **"ID client OAuth"**.
+5. Scegli "Applicazione Web" e aggiungi `http://localhost` (se stai testando sul PC) agli "Origini JavaScript autorizzate".
+6. Copia il **Client ID** che ti viene fornito.
+
+---
+
+## 2. Il Codice HTML
+
+Google mette a disposizione una libreria ufficiale che genera il pulsante automaticamente. Ecco come integrarla nel tuo form di login:
+
+```html
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<div id="g_id_onload"
+     data-client_id="IL_TUO_CLIENT_ID_QUI.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse">
+</div>
+
+<div class="g_id_signin" data-type="standard"></div>
+
+<script>
+  // Questa funzione viene eseguita quando l'utente si logga con successo
+  function handleCredentialResponse(response) {
+     console.log("ID Token ricevuto: " + response.credential);
+     alert("Login effettuato con successo! Ora il server dovrebbe verificare questo token.");
+     // Qui di solito mandi il token al tuo server per completare il login
+  }
+</script>
+
+```
+
+---
+
+## 3. Come funziona il processo
+
+Ecco cosa succede dietro le quinte quando l'utente clicca sul pulsante:
+
+1. **L'utente clicca**: Si apre una finestra pop-up di Google.
+2. **Autorizzazione**: L'utente sceglie il suo account Google.
+3. **Risposta (Token)**: Google invia al tuo sito un "Token" (una stringa di testo criptata molto lunga).
+4. **Verifica**: Il tuo sito riceve il token tramite la funzione JavaScript `handleCredentialResponse`.
+
+---
+
+## Una precisazione importante
+
+Proprio come per il modulo di login che abbiamo visto prima:
+
+* **HTML/JS** ti permette di far apparire il pulsante e ricevere la conferma da Google.
+* **Il Server (Backend)** dovrà poi prendere quel "Token" e verificare che sia autentico per far entrare l'utente nella dashboard.
+
+### Metodo "Veloce" (Senza codice complesso)
+
+Se non vuoi gestire tutta la configurazione di Google Cloud, esistono servizi chiamati **Firebase** o **Auth0** che ti permettono di aggiungere il login con Google (e anche Facebook o Apple) trascinando quasi solo dei componenti pronti.
+
+> **Nota:** Il pulsante di Google spesso non appare se apri il file HTML facendo doppio clic. Devi aprirlo tramite un server locale (come l'estensione **"Live Server"** di VS Code).
+
+Ti piacerebbe sapere come installare e usare **Live Server** per vedere subito il pulsante funzionante?
